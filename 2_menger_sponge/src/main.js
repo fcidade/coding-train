@@ -1,12 +1,12 @@
 class Box {
-    constructor(x = 0, y = 0, z = 0, parentPos = null, deep = 1) {
+    constructor(x = 0, y = 0, z = 0, deep = 1, r=250) {
         this.children = []
         this.pos = createVector(x, y, z)
-        this.parentPos = parentPos || createVector(0);
         this.deep = deep || 1
+        this.radius = r
 
         if (this.deep <= 2) {
-            setTimeout(() => this.activate(), 2000)
+            setTimeout(() => this.activate(), 1000)
         }
     }
     activate() {
@@ -16,12 +16,14 @@ class Box {
             for (let y = -1; y <= 1; y++) {
                 for (let z = -1; z <= 1; z++) {
                     // If two axis are 0, ignore the block
-                    if ((x == 0 && y == 0) ||
-                        (x == 0 && z == 0) ||
-                        (y == 0 && z == 0))
+                    if (abs(x) + abs(y) + abs(z) <= 1)
                         continue;
-
-                    this.children.push(new Box(x, y, z, this.pos, this.deep + 1))
+                    const nr = this.radius/3
+                    const nx = this.pos.x + (x * nr)
+                    const ny = this.pos.y + (y * nr)
+                    const nz = this.pos.z + (z * nr)
+                    const nb = new Box(nx, ny, nz, this.deep + 1, nr)
+                    this.children.push(nb)
                 }
             }
         }
@@ -31,19 +33,15 @@ class Box {
         if (this.children.length) {
             this.children.forEach(b => b.draw())
         } else {
-            const sz = 200 / (this.deep * this.deep)
-
             const { x, y, z } = this.pos
-            const { x: px, y: py, z: pz } = this.parentPos
 
             push()
-            translate(x * sz + (px * sz) * (this.deep), y * sz + (py * sz) * (this.deep), z * sz + (pz * sz) * (this.deep))
-
-            const r = map(x, -1, 1, 33, 245)
-            const g = map(y, -1, 1, 33, 245)
-            const b = map(z, -1, 1, 33, 245)
+            translate(x, y, z)
+            const r = map(x, -75, 75, 33, 245)
+            const g = map(y, -75, 75, 33, 245)
+            const b = map(z, -75, 75, 33, 245)
             fill(r, g, b)
-            box(sz)
+            box(this.radius)
             pop()
         }
     }
