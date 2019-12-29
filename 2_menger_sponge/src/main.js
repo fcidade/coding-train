@@ -16,6 +16,7 @@ class Box {
             for (let y = -1; y <= 1; y++) {
                 for (let z = -1; z <= 1; z++) {
                     // If two axis are 0, ignore the block
+                    // Use > 1 for another interesting effect
                     if (abs(x) + abs(y) + abs(z) <= 1)
                         continue;
                     const nr = this.radius/3
