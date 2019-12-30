@@ -2,7 +2,7 @@ import world from './world.js'
 
 export default class Snake {
     constructor() {
-        this.reset();
+        this.reset()
     }
     reset() {
         this.x = round(world.width / 2)
@@ -81,6 +81,8 @@ export default class Snake {
             fill(map(i, 0, this.tails.length, 255, 0))
             this.drawBox(tail.x, tail.y)
         })
+
+        text(this.points, world.lblPoints.x, world.lblPoints.y)
     }
     drawBox(x, y) {
         rect(x * world.blockSize,
