@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Space Invaders</title>
+  <style>
+    *{margin:0;padding:0;border:0;}
+    body{display:flex;justify-content: center; align-items: center; height: 100vh;}
+    #defaultCanvas0{
+      /* width: 640px !important;
+      height: 640px !important; */
+      transform: scale(3);
+      image-rendering: pixelated !important;             /* Older versions of FF */
+      image-rendering: crisp-edges !important;
+    }
+  </style>
+</head>
+
+<body>
+  <script src="p5.js"></script>
+  <script src="p5.dom.js"></script>
+  <script type="module" src="src/main.js"></script>
+</body>
+
+</html>
