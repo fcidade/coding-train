@@ -1,9 +1,14 @@
 class Box {
-    constructor(x = 0, y = 0, z = 0, deep = 1, r=250) {
+    constructor(x = 0, y = 0, z = 0, deep = 1, rad=250) {
         this.children = []
         this.pos = createVector(x, y, z)
         this.deep = deep || 1
-        this.radius = r
+        this.radius = rad
+
+        const r = map(x, -75, 75, 33, 245)
+        const g = map(y, -75, 75, 33, 245)
+        const b = map(z, -75, 75, 33, 245)
+        this.color = color(r, g, b)
 
         if (this.deep <= 2) {
             setTimeout(() => this.activate(), 1000)
@@ -35,13 +40,9 @@ class Box {
             this.children.forEach(b => b.draw())
         } else {
             const { x, y, z } = this.pos
-
             push()
             translate(x, y, z)
-            const r = map(x, -75, 75, 33, 245)
-            const g = map(y, -75, 75, 33, 245)
-            const b = map(z, -75, 75, 33, 245)
-            fill(r, g, b)
+            fill(this.color)
             box(this.radius)
             pop()
         }
